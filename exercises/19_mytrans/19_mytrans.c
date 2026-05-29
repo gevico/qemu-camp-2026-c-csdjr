@@ -42,8 +42,33 @@ int main() {
     }
 
     // 使用 strtok 按空格分割单词
-    // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    char *token = strtok(line, " \t");
+    while (token != NULL) {
+      // strip punctuation from start/end
+      char key[128];
+      strncpy(key, token, sizeof(key)-1);
+      key[sizeof(key)-1] = '\0';
+      // remove leading punctuation
+      char *s = key;
+      while (*s && !isalpha((unsigned char)*s)) s++;
+      char *e = s + strlen(s) - 1;
+      while (e >= s && !isalpha((unsigned char)*e)) { *e = '\0'; e--; }
+      if (s[0] == '\0') { token = strtok(NULL, " \t"); continue; }
+
+      char lookup_key[128];
+      strncpy(lookup_key, s, sizeof(lookup_key)-1);
+      lookup_key[sizeof(lookup_key)-1] = '\0';
+      to_lowercase(lookup_key);
+
+      const char *trans = hash_table_lookup(table, lookup_key);
+      if (trans) {
+        printf("原文: %s\t翻译: %s\n", lookup_key, trans);
+      } else {
+        printf("原文: %s\t未找到该单词的翻译。\n", lookup_key);
+      }
+
+      token = strtok(NULL, " \t");
+    }
   }
 
   free_hash_table(table);

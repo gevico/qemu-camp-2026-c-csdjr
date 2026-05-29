@@ -40,8 +40,39 @@ void processFile(const char *filename) {
     printf("=== 处理数据来自: %s ===\n", filename);
 
     switch (choice) {
-        // TODO: 在这里添加你的代码
-        // I AM NOT DONE
+        case 1: {
+            int arr[20];
+            for (int i = 0; i < n; i++) {
+                if (fscanf(fin, "%d", &arr[i]) != 1) {
+                    arr[i] = 0;
+                }
+            }
+            sort(arr, n, sizeof(int), compareInt);
+            for (int i = 0; i < n; i++) {
+                printf("%d", arr[i]);
+                if (i < n - 1) printf(" ");
+            }
+            printf("\n");
+            break;
+        }
+        case 2: {
+            float arr[20];
+            for (int i = 0; i < n; i++) {
+                if (fscanf(fin, "%f", &arr[i]) != 1) {
+                    arr[i] = 0.0f;
+                }
+            }
+            sort(arr, n, sizeof(float), compareFloat);
+            for (int i = 0; i < n; i++) {
+                printf("%.2f", arr[i]);
+                if (i < n - 1) printf(" ");
+            }
+            printf("\n");
+            break;
+        }
+        default:
+            printf("错误: 不支持的排序类型 %d\n", choice);
+            break;
     }
 
     fclose(fin);

@@ -5,12 +5,15 @@ TARGET := 17_myfile
 SRCS := 17_myfile.c
 OBJS := $(SRCS:.c=.o)
 
-all: $(TARGET)
+all: $(TARGET) 17_myfile.o
 
-# TODO: 在这里添加你的代码
-# I AM NOT DONE
+$(TARGET): $(SRCS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS)
+
+17_myfile.o: $(SRCS)
+	$(CC) $(CFLAGS) -c -o 17_myfile.o $(SRCS)
 
 clean:
-	rm -f $(TARGET) $(OBJS)
+	rm -f $(TARGET) $(OBJS) 17_myfile.o
 
 .PHONY: all clean
